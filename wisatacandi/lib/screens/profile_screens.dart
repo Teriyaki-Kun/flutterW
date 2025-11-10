@@ -10,6 +10,12 @@ class ProfileScreens extends StatefulWidget{
 
 
 class _ProfileScreenState extends State<ProfileScreens>{
+  
+  bool isSignedIn = false;
+  String fullName = '';
+  String userName = '';
+  int favoriteCandiCount = 0;
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -18,12 +24,68 @@ class _ProfileScreenState extends State<ProfileScreens>{
           Container(
             height: 200, width: double.infinity,color: Colors.deepPurpleAccent,
           ),
-          Column(
-            children: [
-              // TODO : 2. Buat Bagian ProfileHeader yang berisi gambar profil
-              // TODO : 3. Buat Bagian ProfileInfo yang berisi info profil
-              // TODO : 4. Buat ProfileActions yang berisi TextButton sign in/ sign out
-            ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              children: [
+                // TODO : 2. Buat Bagian ProfileHeader yang berisi gambar profil
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 200 - 50),
+                    child: Stack(
+                      alignment: Alignment.bottomRight,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.deepPurple, width: 2),
+                            shape: BoxShape.circle,
+                          ),
+                          child: CircleAvatar(
+                            radius: 50,
+                            backgroundImage: AssetImage('images/place_holder_image.png'),
+                          ),
+                        ),
+                        if(isSignedIn)
+                        IconButton(
+                          onPressed: (){}, 
+                          icon: Icon(Icons.camera_alt, color: Colors.deepPurple[100],),),
+                      ],
+                    ),
+                  ),
+                ),
+                // TODO : 3. Buat Bagian ProfileInfo yang berisi info profil
+                SizedBox(height: 20,),
+                Divider(color: Colors.deepPurple[100],),
+                SizedBox(height: 4,),
+                Row(
+                  children: [
+                    SizedBox(width: MediaQuery.of(context).size.width/3,
+                    child: Row(children: [
+                      Icon(Icons.lock, color: Colors.amber,),
+                      SizedBox(width: 8),
+                      Text('Pengguna', style: TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold,
+                    ),),
+                    ],
+                  ),),
+                  Expanded(
+                    child: Text(': $userName', style: TextStyle(
+                      fontSize: 18),),),
+                      if(isSignedIn) Icon(Icons.edit),
+                  ],
+                ),
+                SizedBox(height: 2,),
+                Divider(color: Colors.deepPurple[100],),
+                Row(
+
+                ),
+                SizedBox(height: 20,),
+                Divider(color: Colors.deepPurple[100],),
+                SizedBox(height: 4,),
+                // TODO : 4. Buat ProfileActions yang berisi TextButton sign in/ sign out
+              ],
+            ),
           )
         ],
       ),
