@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
 class ProfileScreens extends StatefulWidget{
   const ProfileScreens({super.key});
 
@@ -15,6 +16,19 @@ class _ProfileScreenState extends State<ProfileScreens>{
   String fullName = '';
   String userName = '';
   int favoriteCandiCount = 0;
+
+  // TODO 5. Implementasi Fungsi Sign In
+  void signIn(){
+    setState(() {
+      isSignedIn = !isSignedIn;
+    });
+  }
+
+  void signOut(){
+    setState(() {
+      isSignedIn = !isSignedIn;
+    });
+  }
 
   @override
   Widget build(BuildContext context){
@@ -42,9 +56,9 @@ class _ProfileScreenState extends State<ProfileScreens>{
                             shape: BoxShape.circle,
                           ),
                           child: CircleAvatar(
-                            radius: 50,
-                            backgroundImage: AssetImage('images/place_holder_image.png'),
-                          ),
+                          radius: 50,
+                          backgroundImage: AssetImage('images/place_holder_image.png'),
+                        ),
                         ),
                         if(isSignedIn)
                         IconButton(
@@ -78,12 +92,48 @@ class _ProfileScreenState extends State<ProfileScreens>{
                 SizedBox(height: 2,),
                 Divider(color: Colors.deepPurple[100],),
                 Row(
-
+                  children: [
+                    SizedBox(width: MediaQuery.of(context).size.width/3,
+                    child: Row(children: [
+                      Icon(Icons.person, color: Colors.lightBlue,),
+                      SizedBox(width: 8),
+                      Text('Nama', style: TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold,
+                    ),),
+                    ],
+                  ),),
+                  Expanded(
+                    child: Text(': $userName', style: TextStyle(
+                      fontSize: 18),),),
+                      if(isSignedIn) Icon(Icons.edit),
+                  ]
+                ),
+                SizedBox(height: 2,),
+                Divider(color: Colors.deepPurple[100],),
+                SizedBox(height: 4,),
+                Row(
+                  children: [
+                    SizedBox(width: MediaQuery.of(context).size.width/3,
+                    child: Row(children: [
+                      Icon(Icons.favorite, color: Colors.red,),
+                      SizedBox(width: 8),
+                      Text('Favorite', style: TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold,
+                    ),),
+                    ],
+                  ),),
+                  Expanded(
+                    child: Text(': $userName', style: TextStyle(
+                      fontSize: 18),),),
+                      if(isSignedIn) Icon(Icons.edit),
+                  ]
                 ),
                 SizedBox(height: 20,),
                 Divider(color: Colors.deepPurple[100],),
                 SizedBox(height: 4,),
                 // TODO : 4. Buat ProfileActions yang berisi TextButton sign in/ sign out
+                isSignedIn ? TextButton(onPressed: signOut, child: Text('Sign Out'))
+                : TextButton(onPressed: signIn, child: Text('Sign In'))
               ],
             ),
           )
