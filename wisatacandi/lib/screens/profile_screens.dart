@@ -57,7 +57,7 @@ class _ProfileScreenState extends State<ProfileScreens>{
                           ),
                           child: CircleAvatar(
                           radius: 50,
-                          backgroundImage: AssetImage('images/place_holder_image.png'),
+                          backgroundImage: AssetImage('images/placeholder_image.png'),
                         ),
                         ),
                         if(isSignedIn)
