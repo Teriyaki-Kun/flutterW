@@ -33,6 +33,7 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
             child: TextField(
               autofocus: false,
+              //TODO : 6. Implementasi Fitur Pencarian
               decoration: InputDecoration(
                 hintText: 'Cari Candi...',
                 prefixIcon: Icon(Icons.search),
