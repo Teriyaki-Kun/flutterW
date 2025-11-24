@@ -31,24 +31,24 @@ class MainApp extends StatelessWidget {
     //   ),
     //   useMaterial3: true,
     // ),
-    // home: HomeScreen(),
+    home: HomeScreen(),
     );  
     //   home: DetailScreen(candi: candiList[0]),
     // );
   }
 }
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+// class MainScreen extends StatefulWidget {
+//   const MainScreen({super.key});
 
-  @override
-  State<MainScreen> createState() => _MainScreenState();
-}
+//   @override
+//   State<MainScreen> createState() => _MainScreenState();
+// }
 
-class _MainScreenState extends State<MainScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
+// class _MainScreenState extends State<MainScreen> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Placeholder();
+//   }
+// }
 
