@@ -1,6 +1,7 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:wisatacandi/screens/home_screen.dart';
 
 class Signinscreen extends StatefulWidget {
   Signinscreen({super.key});
@@ -57,7 +58,11 @@ class _SigninscreenState extends State<Signinscreen> {
                   obscureText: _obscurePassword,
                 ),
                 SizedBox(height: 28),
-                ElevatedButton(onPressed: (){},
+                ElevatedButton(onPressed: (){
+                  Navigator.push(
+                    context, 
+                    MaterialPageRoute(builder: (context) => HomeScreen()));
+                },
                 child: Text('Sign In'
                   ),
                 ),
