@@ -132,8 +132,21 @@ class _ProfileScreenState extends State<ProfileScreens>{
                 Divider(color: Colors.deepPurple[100],),
                 SizedBox(height: 4,),
                 // TODO : 4. Buat ProfileActions yang berisi TextButton sign in/ sign out
-                isSignedIn ? TextButton(onPressed: signOut, child: Text('Sign Out'))
-                : TextButton(onPressed: signIn, child: Text('Sign In'))
+                isSignedIn
+                    ? TextButton(onPressed: signOut, child: Text('Sign Out'))
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            onPressed: signIn,
+                            child: Text('Sign In'),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pushNamed(context, '/signup'),
+                            child: Text('Sign Up'),
+                          ),
+                        ],
+                      )
               ],
             ),
           )

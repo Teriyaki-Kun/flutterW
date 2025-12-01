@@ -3,6 +3,8 @@ import 'package:wisatacandi/screens/favorite_screen.dart';
 import 'package:wisatacandi/screens/home_screen.dart';
 import 'package:wisatacandi/screens/profile_screens.dart';
 import 'package:wisatacandi/screens/search_screen.dart';
+import 'screens/SignInScreen.dart';
+import 'screens/signup_screen.dart';
 import 'screens/detail_screen.dart';
 import 'data/candi_data.dart';
 
@@ -16,6 +18,14 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      onGenerateRoute: (settings) {
+        if (settings.name == '/signin') {
+          return MaterialPageRoute(builder: (context) => SigninScreen());
+        } else if (settings.name == '/signup') {
+          return MaterialPageRoute(builder: (context) => SignUpScreen());
+        }
+        return MaterialPageRoute(builder: (context) => MainScreen());
+      },
     // title: 'Wisata Candi',
     // theme: ThemeData(
     //   appBarTheme: const AppBarTheme(

@@ -9,11 +9,41 @@ class SearchScreen extends StatefulWidget {
   State<SearchScreen> createState() => _SearchScreenState();
 }
 
+
+
 class _SearchScreenState extends State<SearchScreen> {
   List<Candi> _filteredCandis = candiList;
   String _searchQuery = '';
   final TextEditingController _searchController = TextEditingController();
+
   @override
+  void initState(){
+    super.initState();
+
+    _searchController.addListener(_filterCandis);
+  }
+
+  @override
+void dispose(){
+  _searchController.dispose();
+  super.dispose();
+}
+
+  void _filterCandis() {
+    setState(() {
+      _searchQuery = _searchController.text.toLowerCase();
+      if (_searchQuery.isEmpty) {
+        _filteredCandis = candiList;
+      } else {
+        _filteredCandis = candiList.where((candi) {
+          return candi.name.toLowerCase().contains(_searchQuery) ||
+              candi.location.toLowerCase().contains(_searchQuery);
+        }).toList();
+      }
+    });
+  }
+
+
   Widget build(BuildContext context) {
     return Scaffold(
       // TODO: 2. Buat AppBar dengan judul Pencarian Candi
@@ -32,6 +62,7 @@ class _SearchScreenState extends State<SearchScreen> {
               color: Colors.deepPurple
             ),
             child: TextField(
+              controller: _searchController,
               autofocus: false,
               //TODO : 6. Implementasi Fitur Pencarian
               decoration: InputDecoration(
