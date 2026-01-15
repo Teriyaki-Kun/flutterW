@@ -19,22 +19,43 @@ class _DetailScreenState extends State<DetailScreen> {
   bool isFavorite = false;
   bool isSignedIn = false;
 
-  Future<void> _toggleFavorite() async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (!isSignedIn){
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.pushReplacementNamed(context, '/signin'); 
-      });
-    }
-    return;
+  @override
+  void initState() {
+    super.initState();
+    _checkSignInStatus();
+    _loadFavoriteStatus();
   }
 
-  bool favoriteStatus = !isFavorite;
-  prefs.setBool('favorite_${widget.candi.name}', favoriteStatus);
+  Future<void> _checkSignInStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool signedIn = prefs.getBool('isSignedIn') ?? false;
+    setState(() {
+      isSignedIn = signedIn;
+    });
+  }
 
-  setState((){
-    isFavorite = favoriteStatus;
-  });
+
+  Future<void> _loadFavoriteStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      isFavorite = prefs.getBool('favorite_${widget.candi.name}') ?? false;
+    });
+  }
+
+  Future<void> _toggleFavorite() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (!isSignedIn) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacementNamed(context, '/signin');
+      });
+      return;
+    }
+    bool favoriteStatus = !isFavorite;
+    prefs.setBool('favorite_${widget.candi.name}', favoriteStatus);
+    setState(() {
+      isFavorite = favoriteStatus;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +71,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.asset(
-                      candi.imageAsset,
+                      widget.candi.imageAsset,
                       width: double.infinity,
                       height: 300,
                       fit: BoxFit.cover,
@@ -83,7 +104,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     children: [
                       Expanded(
                         child: Text(
-                          candi.name,
+                          widget.candi.name,
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -93,8 +114,11 @@ class _DetailScreenState extends State<DetailScreen> {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.favorite_border),
+                        onPressed: _toggleFavorite,
+                        icon: Icon(
+                          isFavorite ? Icons.favorite : Icons.favorite_border,
+                          color: isFavorite ? Colors.red : null,
+                        ),
                       ),
                     ],
                   ),
@@ -110,7 +134,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
-                      Text(': ${candi.location}'),
+                      Text(': ${widget.candi.location}'),
                     ],
                   ),
                   Row(
@@ -124,7 +148,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
-                      Text(': ${candi.built}'),
+                      Text(': ${widget.candi.built}'),
                     ],
                   ),
                   Row(
@@ -138,7 +162,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
-                      Text(': ${candi.type}'),
+                      Text(': ${widget.candi.type}'),
                     ],
                   ),
                   const SizedBox(height: 16),
@@ -146,7 +170,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   const SizedBox(height: 16),
                   // Description: allow wrapping (no Row)
                   Text(
-                    '  ${candi.description}',
+                    '  ${widget.candi.description}',
                     style: const TextStyle(color: Colors.black87),
                   ),
                 ],
@@ -167,7 +191,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     height: 100,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: candi.imageUrls.length,
+                      itemCount: widget.candi.imageUrls.length,
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.only(right: 8),
@@ -186,7 +210,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: CachedNetworkImage(
-                                  imageUrl: candi.imageUrls[index],
+                                  imageUrl: widget.candi.imageUrls[index],
                                   width: 120,
                                   height: 100,
                                   fit: BoxFit.cover,
