@@ -2,13 +2,34 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/candi.dart';
 
 
-class DetailScreen extends StatelessWidget {
+class DetailScreen extends StatefulWidget {
   final Candi candi;
 
   const DetailScreen({super.key, required this.candi});
+
+  @override
+  State<DetailScreen> createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<DetailScreen> {
+  bool isFavorite = false;
+  bool isSignedIn = false;
+
+  Future<void> _toggleFavorite() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (!isSignedIn){
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.
+      });
+    }
+    setState(() {
+      isFavorite = !isFavorite;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
