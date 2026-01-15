@@ -23,13 +23,18 @@ class _DetailScreenState extends State<DetailScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (!isSignedIn){
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.
+        Navigator.pushReplacementNamed(context, '/signin'); 
       });
     }
-    setState(() {
-      isFavorite = !isFavorite;
-    });
+    return;
   }
+
+  bool favoriteStatus = !isFavorite;
+  prefs.setBool('favorite_${widget.candi.name}', favoriteStatus);
+
+  setState((){
+    isFavorite = favoriteStatus;
+  });
 
   @override
   Widget build(BuildContext context) {
